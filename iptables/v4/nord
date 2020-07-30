@@ -1,0 +1,29 @@
+*nat
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [18:1084]
+:POSTROUTING ACCEPT [4:244]
+-A POSTROUTING -o tap+ -j MASQUERADE
+-A POSTROUTING -o tun+ -j MASQUERADE
+COMMIT
+
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [14:840]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -i lo -j ACCEPT
+-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -o lo -j ACCEPT
+-A OUTPUT -o tap+ -j ACCEPT
+-A OUTPUT -o tun+ -j ACCEPT
+-A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 1194 -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
+-A OUTPUT -d 104.17.49.74/32 -o eth0 -j ACCEPT
+-A OUTPUT -d 104.17.50.74/32 -o eth0 -j ACCEPT
+COMMIT
