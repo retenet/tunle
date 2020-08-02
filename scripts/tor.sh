@@ -15,8 +15,9 @@ DNSPort [::]:5353
 
 ServerDNSDetectHijacking 0
 EOT
-
 echo "Done."
+
+echo -n 'nameserver 127.0.0.1' > /etc/resolv.conf
 
 echo "Starting Tor..."
 su user -c "tor"
