@@ -105,6 +105,10 @@ EOT
   chmod 0600 /dev/shm/auth_file
 fi
 
+# Cloudflare DNS
+# TODO: DoT
+echo 'nameserver 1.1.1.1' > /etc/resolv.conf
+
 # Load Provider
 spath="./scripts/${PROVIDER}.sh"
 if [ -r "${spath}" ]; then
