@@ -91,7 +91,9 @@ else
 fi
 
 # Check if Username and Password are Populated
-if [[ -z ${UNAME:-} ||  -z ${PASSWD:-} ]]; then 
+if [ "${PROVIDER}" == "tor" ]; then
+    continue
+elif [[ -z ${UNAME:-} ||  -z ${PASSWD:-} ]]; then 
   printf "%s\n" "Missing Username or Password"; 
   exit 1; 
 else
