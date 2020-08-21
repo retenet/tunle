@@ -14,4 +14,10 @@ if [[ -z "${config}" ]]; then
     exit 1
 fi
 
-openvpn --config "${config}" --user user --group user --auth-nocache
+PARAMS="--config ${config} --auth-nocache --user user --group user"
+
+# Use UNAME/PASSWD if they were provided
+if [[ ! $(grep -o 'generic' /dev/shm/auth_file) ]]; then
+    PARAMS+=" --auth-user-pass /dev/shm/auth_file "
+fi
+openvpn $PARAMS
