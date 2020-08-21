@@ -32,8 +32,10 @@ case "${PROVIDER}" in
 
   "generic")
     echo "Loading Generic OpenVPN..."
-    UNAME="generic"
-    PASSWD="generic"
+    if [[ -z "$UNAME" || -z "$PASSWD" ]]; then
+        UNAME="generic"
+        PASSWD="generic"
+    fi
     ;;
     
   "ipvanish")
