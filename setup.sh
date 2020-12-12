@@ -92,18 +92,18 @@ else
 fi
 
 # Check if Username and Password are Populated
-if [ "${PROVIDER}" == "tor" ]; then
-    continue
-elif [[ -z ${UNAME:-} ||  -z ${PASSWD:-} ]]; then 
-  printf "%s\n" "Missing Username or Password"; 
-  exit 1; 
-else
-  rm -f /dev/shm/auth_file
-  cat <<EOT > /dev/shm/auth_file
-$UNAME
-$PASSWD
+if [ "${PROVIDER}" != "tor" ]; then
+    if [[ -z ${UNAME:-} ||  -z ${PASSWD:-} ]]; then 
+      printf "%s\n" "Missing Username or Password"; 
+      exit 1; 
+    else
+      rm -f /dev/shm/auth_file
+      cat <<EOT > /dev/shm/auth_file
+    $UNAME
+    $PASSWD
 EOT
-  chmod 0600 /dev/shm/auth_file
+      chmod 0600 /dev/shm/auth_file
+    fi
 fi
 
 # Cloudflare DNS
