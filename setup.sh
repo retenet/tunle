@@ -6,6 +6,7 @@ set -euo pipefail
 
 # Intialize variables
 PROVIDER="${PROVIDER:-generic}"
+VPN_TYPE="${VPN_TYPE:-openvpn}"
 
 isfile() {
   if [[ -r "${1:-}" ]]; then
@@ -32,8 +33,8 @@ case "${PROVIDER}" in
 
   "generic")
     echo "Loading Generic OpenVPN..."
-    UNAME="${UNAME:=generic}"
-    PASSWD="${PASSWD:=generic}"
+    UNAME="generic"
+    PASSWD="generic"
     ;;
     
   "ipvanish")
@@ -106,7 +107,7 @@ EOT
 fi
 
 # Cloudflare DNS
-# TODO: DoT
+# TODO: DoT over VPN
 echo 'nameserver 1.1.1.1' > /etc/resolv.conf
 
 # Load Provider
