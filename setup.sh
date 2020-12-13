@@ -32,7 +32,7 @@ case "${PROVIDER}" in
     ;;
 
   "generic")
-    echo "Loading Generic OpenVPN..."
+    echo "Loading Generic $VPN_TYPE..."
     UNAME="generic"
     PASSWD="generic"
     ;;

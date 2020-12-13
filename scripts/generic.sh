@@ -2,22 +2,63 @@
 
 set -euo pipefail
 
-if [[ ! -d "/tmp/vpn" ]]; then
-    echo "Mount OpenVPN Config in /tmp/vpn/"
-    exit 1
-fi
+finish(){
+    wg-quick down "$1"
+    exit 0
+}
 
-config="$(find /tmp/vpn/ -type f -name '*.ovpn')"
+wireguard(){
+    if [[ ! -d "/etc/wireguard/" ]]; then
+        echo "Mount Wireguard Config in /etc/wireguard/"
+        exit 1
+    fi
 
-if [[ -z "${config}" ]]; then
-    echo "No ovpn config found in /tmp/vpn/"
-    exit 1
-fi
+    config="$(find /etc/wireguard/ -type f -name '*.conf')"
 
-PARAMS="--config ${config} --auth-nocache --user user --group user"
+    if [[ -z "${config}" ]]; then
+        echo "No *.conf config found in /etc/wireguard/"
+        exit 1
+    fi
 
-# Use UNAME/PASSWD if they were provided
-if [[ ! $(grep -o 'generic' /dev/shm/auth_file) ]]; then
-    PARAMS+=" --auth-user-pass /dev/shm/auth_file "
-fi
-openvpn $PARAMS
+    trap "finish $config" SIGTERM SIGINT SIGQUIT
+
+    wg-quick up "$config"
+
+    sleep infinity &
+    wait $!
+}
+
+openvpn(){
+    if [[ ! -d "/tmp/vpn" ]]; then
+        echo "Mount OpenVPN Config in /tmp/vpn/"
+        exit 1
+    fi
+    
+    config="$(find /tmp/vpn/ -type f -name '*.ovpn')"
+    
+    if [[ -z "${config}" ]]; then
+        echo "No *.ovpn config found in /tmp/vpn/"
+        exit 1
+    fi
+    
+    PARAMS="--config ${config} --auth-nocache --user user --group user"
+    
+    # Use UNAME/PASSWD if they were provided
+    if [[ ! $(grep -qo 'generic' /dev/shm/auth_file) ]]; then
+        PARAMS+=" --auth-user-pass /dev/shm/auth_file "
+    fi
+    openvpn "$PARAMS"
+}
+
+case "$VPN_TYPE" in 
+    "openvpn")
+        openvpn
+        ;;
+    "wireguard")
+        wireguard
+        ;;
+    *)
+        echo "Invalid VPN_TYPE [openvpn, wireguard]"
+        exit 1
+        ;;
+esac
