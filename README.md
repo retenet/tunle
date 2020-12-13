@@ -9,7 +9,7 @@ tunle is a Dockerized tunneling tool providing a VPN or Proxy tunnel for all Doc
 
 # How to Use
 
-Copy one of the samples configs from `configs`
+Copy one of the samples configs from `configs` for OpenVPN
 
 ```bash
 docker run -d \
@@ -23,8 +23,27 @@ docker run -d \
   --cap-add SETGID \
   --cap-add NET_ADMIN \
   --cap-add NET_RAW \
+  retenet/tunleV
+```
+
+Wireguard Currently only supported with predefined config
+```bash
+docker run -d \
+
+  --rm \
+  --name tunle \
+  -e VPN_TYPE=wireguard \
+  -v /home/user/wg_vpn:/etc/wireguard \
+  --device /dev/net/tun \
+  --cap-drop all \
+  --cap-add MKNOD \
+  --cap-add SETUID \
+  --cap-add SETGID \
+  --cap-add NET_ADMIN \
+  --cap-add NET_RAW \
   retenet/tunle
 ```
+
 
 Default Docker Capability List:
 * CHOWN
