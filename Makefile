@@ -36,6 +36,13 @@ build:
 		-t $(DOCKER_IMAGE):$(DOCKER_TAG)
 
 release: build
+	@docker manifest create $(DOCKER_IMAGE):latest \
+		$(DOCKER_IMAGE):amd64 \
+		$(DOCKER_IMAGE):i386 \
+		$(DOCKER_IMAGE):arm64v8 \
+		$(DOCKER_IMAGE):arm32v7 \
+		$(DOCKER_IMAGE):arm32v6
+	@docker manifest push -p $(DOCKER_IMAGE):latest
 	@docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
 
 test: build
