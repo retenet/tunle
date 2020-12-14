@@ -83,6 +83,7 @@ The default provider for tunle is `generic`
 ### Providers
 
 - [x] Generic OpenVPN Config
+- [x] Generic Wireguard Config
 - [x] CyberGhost
 - [ ] ExpressVPN
 - [ ] I2P
