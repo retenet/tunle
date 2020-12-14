@@ -7,6 +7,7 @@ set -euo pipefail
 # Intialize variables
 PROVIDER="${PROVIDER:-generic}"
 VPN_TYPE="${VPN_TYPE:-openvpn}"
+export VPN_TYPE
 
 isfile() {
   if [[ -r "${1:-}" ]]; then

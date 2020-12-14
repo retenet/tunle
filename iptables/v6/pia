@@ -16,6 +16,7 @@ COMMIT
 -A FORWARD -i lo -j ACCEPT
 -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A OUTPUT -o lo -j ACCEPT
+-A OUTPUT -o pia -j ACCEPT
 -A OUTPUT -o tap+ -j ACCEPT
 -A OUTPUT -o tun+ -j ACCEPT
 -A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
@@ -23,6 +24,8 @@ COMMIT
 -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
 -A OUTPUT -p tcp -m tcp --dport 501 -j ACCEPT
 -A OUTPUT -p tcp -m tcp --dport 502 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 1337 -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 1337 -j ACCEPT
 -A OUTPUT -p udp -m udp --dport 1197 -j ACCEPT
 -A OUTPUT -p udp -m udp --dport 1198 -j ACCEPT
 COMMIT
