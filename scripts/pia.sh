@@ -10,12 +10,6 @@ ENCRYPTION=${ENCRYPTION:-strong}
 export PIA_DNS=${PIA_DNS:-true}
 export PIA_FP=${PIA_FP:-}
 
-create_tun() {
-  mkdir -p /dev/net
-  [[ -c /dev/net/tun ]] || mknod -m 0666 /dev/net/tun c 10 200
-}
-
-create_tun
 curl -sSL -o - "https://github.com/pia-foss/manual-connections/archive/${MAN_VER}.tar.gz" | tar zxv --strip 1
 
 # We don't want the vpn to be daemonized

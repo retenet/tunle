@@ -7,11 +7,6 @@ RECOMMENDED_SERVERS="https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_
 OVPN_FILES="https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip"
 PROTCOL="${PROTCOL:-openvpn_udp}"
 
-create_tun() {
-  mkdir -p /dev/net
-  [[ -c /dev/net/tun ]] || mknod -m 0666 /dev/net/tun c 10 200
-}
-
 download_configs() {
   local dest
   dest="$1"

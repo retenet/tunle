@@ -9,6 +9,11 @@ PROVIDER="${PROVIDER:-generic}"
 VPN_TYPE="${VPN_TYPE:-openvpn}"
 export VPN_TYPE
 
+create_tun() {
+  mkdir -p /dev/net
+  [[ -c /dev/net/tun ]] || mknod -m 0666 /dev/net/tun c 10 200
+}
+
 isfile() {
   if [[ -r "${1:-}" ]]; then
       true
@@ -110,6 +115,8 @@ fi
 # Cloudflare DNS
 # TODO: DoT over VPN
 echo 'nameserver 1.1.1.1' > /etc/resolv.conf
+
+create_tun
 
 # Load Provider
 spath="./scripts/${PROVIDER}.sh"
