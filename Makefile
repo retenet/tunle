@@ -34,8 +34,10 @@ build:
 		--build-arg VCS_URL=`git config --get remote.origin.url` \
 		--build-arg VCS_REF=$(GIT_COMMIT) \
 		-t $(DOCKER_IMAGE):$(DOCKER_TAG)
+tag:
+	@docker tag $(DOCKER_IMAGE):$(DOCKER_TAG) $(DOCKER_IMAGE):latest
 
-release: build
+release: build tag
 	@docker manifest create $(DOCKER_IMAGE):latest \
 		$(DOCKER_IMAGE):amd64 \
 		$(DOCKER_IMAGE):i386 \
