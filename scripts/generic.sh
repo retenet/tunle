@@ -20,7 +20,7 @@ wireguard(){
         exit 1
     fi
 
-    # shellcheck source=/dev/null
+    # shellcheck disable=SC2064
     trap "finish $config" SIGTERM SIGINT SIGQUIT
 
     wg-quick up "$config"
@@ -45,7 +45,7 @@ openvpn(){
     PARAMS="--config ${config} --auth-nocache --user user --group user"
     
     # Use UNAME/PASSWD if they were provided
-    # shellcheck source=/dev/null
+    # shellcheck disable=SC2143
     if [[ ! $(grep -qo 'generic' /dev/shm/auth_file) ]]; then
         PARAMS+=" --auth-user-pass /dev/shm/auth_file "
     fi
