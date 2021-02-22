@@ -21,7 +21,7 @@ RUN git clone https://git.zx2c4.com/wireguard-tools && \
     make && \
     make install
 
-FROM ${ARCH}/alpine:3.12
+FROM ${ARCH}/alpine:3.13
 
 ARG BUILD_DATE
 ARG VERSION
