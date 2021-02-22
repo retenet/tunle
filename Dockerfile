@@ -1,8 +1,8 @@
 ARG ARCH
 
-FROM ${ARCH}/golang:1.15.5-alpine3.12 as builder
+FROM ${ARCH}/golang:1.15.8-alpine3.13 as builder
 
-ARG wg_go_tag=v0.0.20201118
+ARG wg_go_tag=0.0.20210212
 ARG wg_tools_tag=v1.0.20200827
 
 RUN apk add --update git build-base libmnl-dev iptables
@@ -39,13 +39,11 @@ LABEL maintainer="Craig West <dev@exploit.design>" \
       org.label-schema.schema-version="1.0" 
 
 RUN \
-    echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk update && \
     apk add -q --no-progress --no-cache --update \
     bash \
     ca-certificates \
     curl \
-    i2pd \
     iproute2 \
     iptables \
     ip6tables \
