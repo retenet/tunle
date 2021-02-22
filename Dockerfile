@@ -66,7 +66,7 @@ COPY --from=builder /usr/bin/wireguard-go /usr/bin/wg* /usr/bin/
 COPY . .
 
 HEALTHCHECK --interval=5m --timeout=5s \
-  CMD curl -fL one.one.one.one || exit 1
+  CMD curl -fL html.duckduckgo.com || exit 1
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/bin/bash", "setup.sh"]
