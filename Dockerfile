@@ -43,7 +43,6 @@ RUN \
     apk add -q --no-progress --no-cache --update \
     bash \
     ca-certificates \
-    curl \
     iproute2 \
     iptables \
     ip6tables \
@@ -64,7 +63,7 @@ COPY --from=builder /usr/bin/wireguard-go /usr/bin/wg* /usr/bin/
 COPY . .
 
 HEALTHCHECK --interval=5m --timeout=5s \
-  CMD curl -fL html.duckduckgo.com || exit 1
+  CMD wget --no-verbose --tries=1 --spider https://duckduckgo.com || exit 1
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/bin/bash", "setup.sh"]
