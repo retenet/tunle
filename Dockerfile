@@ -43,6 +43,7 @@ RUN \
     apk add -q --no-progress --no-cache --update \
     bash \
     ca-certificates \
+    curl \
     iproute2 \
     iptables \
     ip6tables \
