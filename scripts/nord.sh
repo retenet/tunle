@@ -79,8 +79,6 @@ done
 
 [[ -r "${config:-}" ]] || { config="./nord/$(find nord -type f | sed 's|^nord/||' | shuf -n 1)"; }
 
-create_tun
-
 openvpn --config "${config}" \
     --auth-user-pass /dev/shm/auth_file --auth-nocache \
     --user user --group user
