@@ -49,6 +49,7 @@ _openvpn(){
     if [[ ! $(grep -o 'generic' /dev/shm/auth_file) ]]; then
         PARAMS+=" --auth-user-pass /dev/shm/auth_file "
     fi
+    # shellcheck disable=SC2086
     openvpn $PARAMS
 }
 
