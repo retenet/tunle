@@ -46,10 +46,10 @@ _openvpn(){
     
     # Use UNAME/PASSWD if they were provided
     # shellcheck disable=SC2143
-    if [[ ! $(grep -qo 'generic' /dev/shm/auth_file) ]]; then
+    if [[ ! $(grep -o 'generic' /dev/shm/auth_file) ]]; then
         PARAMS+=" --auth-user-pass /dev/shm/auth_file "
     fi
-    openvpn "$PARAMS"
+    openvpn $PARAMS
 }
 
 case "$VPN_TYPE" in 
