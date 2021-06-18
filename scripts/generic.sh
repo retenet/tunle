@@ -7,7 +7,7 @@ finish(){
     exit 0
 }
 
-wireguard(){
+_wireguard(){
     if [[ ! -d "/etc/wireguard/" ]]; then
         echo "Mount Wireguard Config in /etc/wireguard/"
         exit 1
@@ -29,7 +29,7 @@ wireguard(){
     wait $!
 }
 
-openvpn(){
+_openvpn(){
     if [[ ! -d "/tmp/vpn" ]]; then
         echo "Mount OpenVPN Config in /tmp/vpn/"
         exit 1
@@ -54,10 +54,10 @@ openvpn(){
 
 case "$VPN_TYPE" in 
     "openvpn")
-        openvpn
+        _openvpn
         ;;
     "wireguard")
-        wireguard
+        _wireguard
         ;;
     *)
         echo "Invalid VPN_TYPE [openvpn, wireguard]"
